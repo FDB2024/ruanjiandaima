@@ -1,0 +1,370 @@
+<template>
+	<div>
+
+	<div class="container" :style='{"minHeight":"100vh","alignItems":"center","background":"#d7eaff","display":"flex","width":"100%","backgroundSize":"cover","backgroundPosition":"center center","backgroundRepeat":"no-repeat","justifyContent":"center"}'>
+		<el-form class='rgs-form' v-if="pageFlag=='register'" :style='{"minHeight":"calc(100vh - 72px)","padding":"0 50% 0 140px","margin":"36px auto","borderRadius":"0px","flexWrap":"wrap","background":"url(http://codegen.caihongy.cn/20231006/08ac7a79d04949ef831a82a279de5e7d.jpg) no-repeat right center / 50% 100%,#fff","display":"flex","width":"calc(100% - 280px)","position":"relative","height":"auto"}' ref="registerForm" :model="registerForm" :rules="rules">
+			<div v-if="false" :style='{"width":"100%","margin":"0 0 10px 0","lineHeight":"44px","fontSize":"20px","color":"rgba(64, 158, 255, 1)","textAlign":"center"}'>USER / REGISTER</div>
+			<div v-if="true" :style='{"margin":"60px auto 10px","color":"#1e3c4f","textAlign":"center","width":"100%","letterSpacing":"2px","lineHeight":"44px","fontSize":"32px","fontWeight":"600"}'>基于web的社区管理系统注册</p></div>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="yonghuzhanghao">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('yonghuzhanghao')?'required':''">用户账号：</div>
+				<el-input v-model="registerForm.yonghuzhanghao"  placeholder="请输入用户账号" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="mima">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('mima')?'required':''">密码：</div>
+				<el-input v-model="registerForm.mima" type="password" placeholder="请输入密码" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="mima">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('mima')?'required':''">确认密码：</div>
+				<el-input v-model="registerForm.mima2" type="password" placeholder="请再次输入密码" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="yonghuxingming">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('yonghuxingming')?'required':''">用户姓名：</div>
+				<el-input v-model="registerForm.yonghuxingming"  placeholder="请输入用户姓名" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="xingbie">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('xingbie')?'required':''">性别：</div>
+                <el-select v-model="registerForm.xingbie" placeholder="请选择性别" >
+                  <el-option
+                      v-for="(item,index) in yonghuxingbieOptions"
+                      :key="index"
+                      :label="item"
+                      :value="item">
+                  </el-option>
+                </el-select>
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="nianling">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('nianling')?'required':''">年龄：</div>
+				<el-input v-model="registerForm.nianling"  placeholder="请输入年龄" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="youxiang">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('youxiang')?'required':''">邮箱：</div>
+				<el-input v-model="registerForm.youxiang"  placeholder="请输入邮箱" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="shoujihao">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('shoujihao')?'required':''">手机号：</div>
+				<el-input v-model="registerForm.shoujihao"  placeholder="请输入手机号" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="shenfenzheng">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('shenfenzheng')?'required':''">身份证：</div>
+				<el-input v-model="registerForm.shenfenzheng"  placeholder="请输入身份证" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="jiatingzhuzhi">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('jiatingzhuzhi')?'required':''">家庭住址：</div>
+				<el-input v-model="registerForm.jiatingzhuzhi"  placeholder="请输入家庭住址" />
+			</el-form-item>
+			<el-form-item :style='{"width":"400px","padding":"0","margin":"0 auto 10px","height":"auto"}' v-if="tableName=='yonghu'" prop="touxiang">
+				<div v-if="true" :style='{"padding":"0 10px","color":"#333","textAlign":"right","left":"-100px","background":"none","display":"inline-block","width":"100px","lineHeight":"36px","fontSize":"14px","position":"absolute"}' :class="changeRules('touxiang')?'required':''">头像：</div>
+                <file-upload
+					tip="点击上传头像"
+					action="file/upload"
+					:limit="1"
+					:multiple="true"
+					:fileUrls="registerForm.touxiang?registerForm.touxiang:''"
+					@change="yonghutouxiangUploadChange"
+				></file-upload>
+			</el-form-item>
+			<el-button :style='{"border":"0","cursor":"pointer","padding":"0 24px","margin":"0 auto","color":"#fff","display":"block","outline":"none","borderRadius":"4px","background":"#1e3c4f","width":"400px","fontSize":"16px","height":"50px","order":"30"}' type="primary" @click="submitForm('registerForm')">注册</el-button>
+			<el-button :style='{"border":"0","cursor":"pointer","padding":"0 0px","margin":"0px auto 20px","color":"#999","textAlign":"right","display":"block","outline":"none","borderRadius":"4px","background":"none","width":"400px","fontSize":"14px","height":"44px","order":"40"}' @click="resetForm('registerForm')">重置</el-button>
+			<router-link :style='{"cursor":"pointer","padding":"0 0px","margin":"0 auto 20px","color":"#1e3c4f","textAlign":"center","display":"block","width":"400px","lineHeight":"1","fontSize":"14px","textDecoration":"none","order":"20"}' to="/login">已有账户登录</router-link>
+			<div class="idea1" :style='{"width":"100%","background":"red","display":"none","height":"40px"}'></div>
+			<div class="idea2" :style='{"width":"100%","background":"blue","display":"none","height":"40px"}'></div>
+		</el-form>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+
+export default {
+    //数据集合
+    data() {
+		return {
+            pageFlag : '',
+			tableName: '',
+			registerForm: {},
+			rules: {},
+			requiredRules: {},
+            yonghuxingbieOptions: [],
+		}
+    },
+	mounted() {
+		this.tableName = this.$route.query.role;
+		if(this.tableName=='yonghu'){
+			this.registerForm = {
+                yonghuzhanghao: '',
+                mima: '',
+                yonghuxingming: '',
+                xingbie: '',
+                nianling: '',
+                youxiang: '',
+                shoujihao: '',
+                shenfenzheng: '',
+                jiatingzhuzhi: '',
+                touxiang: '',
+                status: '',
+                passwordwrongnum: '',
+			}
+		}
+		if ('yonghu' == this.tableName) {
+			this.requiredRules.yonghuzhanghao = [{ required: true, message: '请输入用户账号', trigger: 'blur' }]
+		}
+		if ('yonghu' == this.tableName) {
+			this.requiredRules.mima = [{ required: true, message: '请输入密码', trigger: 'blur' }]
+		}
+		if ('yonghu' == this.tableName) {
+			this.requiredRules.yonghuxingming = [{ required: true, message: '请输入用户姓名', trigger: 'blur' }]
+		}
+	},
+    created() {
+      this.pageFlag = this.$route.query.pageFlag;
+      if ('yonghu' == this.tableName) {
+        this.rules.yonghuzhanghao = [{ required: true, message: '请输入用户账号', trigger: 'blur' }];
+      }
+      if ('yonghu' == this.tableName) {
+        this.rules.mima = [{ required: true, message: '请输入密码', trigger: 'blur' }];
+      }
+      if ('yonghu' == this.tableName) {
+        this.rules.yonghuxingming = [{ required: true, message: '请输入用户姓名', trigger: 'blur' }];
+      }
+        this.yonghuxingbieOptions = "男,女".split(',');
+      if ('yonghu' == this.tableName) {
+        this.rules.youxiang = [{ required: true, validator: this.$validate.isEmail, trigger: 'blur' }];
+      }
+      if ('yonghu' == this.tableName) {
+        this.rules.shoujihao = [{ required: true, validator: this.$validate.isMobile, trigger: 'blur' }];
+      }
+      if ('yonghu' == this.tableName) {
+        this.rules.shenfenzheng = [{ required: true, validator: this.$validate.isIdCard, trigger: 'blur' }];
+      }
+      if ('yonghu' == this.tableName) {
+        this.rules.status = [{ required: true, validator: this.$validate.isIntNumer, trigger: 'blur' }];
+      }
+      if ('yonghu' == this.tableName) {
+        this.rules.passwordwrongnum = [{ required: true, validator: this.$validate.isIntNumer, trigger: 'blur' }];
+      }
+    },
+    //方法集合
+    methods: {
+		changeRules(name){
+			if(this.requiredRules[name]){
+				return true
+			}
+			return false
+		},
+      // 获取uuid
+      getUUID () {
+        return new Date().getTime();
+      },
+        // 下二随
+      yonghutouxiangUploadChange(fileUrls) {
+          this.registerForm.touxiang = fileUrls.replace(new RegExp(this.$config.baseUrl,"g"),"");
+      },
+
+        // 多级联动参数
+
+
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            var url=this.tableName+"/register";
+				if((!this.registerForm.yonghuzhanghao) && `yonghu` == this.tableName){
+					this.$message.error(`用户账号不能为空`);
+					return
+				}
+               if(`yonghu` == this.tableName && this.registerForm.mima!=this.registerForm.mima2) {
+                this.$message.error(`两次密码输入不一致`);
+                return
+               }
+				if((!this.registerForm.mima) && `yonghu` == this.tableName){
+					this.$message.error(`密码不能为空`);
+					return
+				}
+				if((!this.registerForm.yonghuxingming) && `yonghu` == this.tableName){
+					this.$message.error(`用户姓名不能为空`);
+					return
+				}
+					if(`yonghu` == this.tableName && this.registerForm.youxiang &&(!this.$validate.isEmail2(this.registerForm.youxiang))){
+						this.$message.error(`邮箱应输入邮件格式`);
+						return
+					}
+					if(`yonghu` == this.tableName && this.registerForm.shoujihao &&(!this.$validate.isMobile2(this.registerForm.shoujihao))){
+						this.$message.error(`手机号应输入手机格式`);
+						return
+					}
+					if(`yonghu` == this.tableName && this.registerForm.shenfenzheng &&(!this.$validate.isIdCard2(this.registerForm.shenfenzheng))){
+						this.$message.error(`身份证应输入身份证格式`);
+						return
+					}
+            this.$http.post(url, this.registerForm).then(res => {
+              if (res.data.code === 0) {
+                this.$message({
+                  message: '注册成功',
+                  type: 'success',
+                  duration: 1500,
+                  onClose: () => {
+                    this.$router.push('/login');
+                  }
+                });
+              } else {
+                this.$message.error(res.data.msg);
+              }
+            });
+          } else {
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
+  }
+</script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+	.container {
+		position: relative;
+		background: #d7eaff;
+		
+		.el-input {
+		  width: auto;
+		}
+		
+		.el-date-editor.el-input {
+			width: auto;
+		}
+		
+		.el-form-item /deep/ .el-form-item__content {
+						display: flex;
+						flex-wrap: wrap;
+					}
+		
+		.rgs-form .el-input /deep/ .el-input__inner {
+						border-radius: 0px;
+						padding: 0 10px;
+						outline: none;
+						color: #666;
+						background: #fff;
+						width: 400px;
+						font-size: 14px;
+						border-color: #333;
+						border-width: 1px;
+						border-style: solid;
+						height: 50px;
+					}
+		
+		.rgs-form .el-select /deep/ .el-input__inner {
+						border-radius: 0px;
+						padding: 0 10px;
+						outline: none;
+						color: #666;
+						background: #fff;
+						width: 400px;
+						font-size: 14px;
+						border-color: #333;
+						border-width: 1px;
+						border-style: solid;
+						min-width: 300px;
+						height: 50px;
+					}
+		
+		.rgs-form .el-date-editor /deep/ .el-input__inner {
+						border-radius: 0px;
+						padding: 0 10px 0 30px;
+						outline: none;
+						color: #666;
+						background: #fff;
+						width: 400px;
+						font-size: 14px;
+						border-color: #333;
+						border-width: 1px;
+						border-style: solid;
+						min-width: 300px;
+						height: 50px;
+					}
+		
+		.rgs-form .el-date-editor /deep/ .el-input__inner {
+						border-radius: 0px;
+						padding: 0 10px 0 30px;
+						outline: none;
+						color: #666;
+						background: #fff;
+						width: 400px;
+						font-size: 14px;
+						border-color: #333;
+						border-width: 1px;
+						border-style: solid;
+						min-width: 300px;
+						height: 50px;
+					}
+		
+		.rgs-form /deep/ .el-upload--picture-card {
+			background: transparent;
+			border: 0;
+			border-radius: 0;
+			width: auto;
+			height: auto;
+			line-height: initial;
+			vertical-align: middle;
+		}
+		
+		.rgs-form /deep/ .upload .upload-img {
+		  		  cursor: pointer;
+		  		  color: #002355;
+		  		  font-weight: 600;
+		  		  font-size: 32px;
+		  		  border-color: #333;
+		  		  line-height: 60px;
+		  		  border-radius: 30px;
+		  		  background: #fff;
+		  		  width: 120px;
+		  		  border-width: 1px;
+		  		  border-style: solid;
+		  		  text-align: center;
+		  		  height: 60px;
+		  		}
+		
+		.rgs-form /deep/ .el-upload-list .el-upload-list__item {
+		  		  cursor: pointer;
+		  		  color: #002355;
+		  		  font-weight: 600;
+		  		  font-size: 32px;
+		  		  border-color: #333;
+		  		  line-height: 60px;
+		  		  border-radius: 30px;
+		  		  background: #fff;
+		  		  width: 120px;
+		  		  border-width: 1px;
+		  		  border-style: solid;
+		  		  text-align: center;
+		  		  height: 60px;
+		  		}
+		
+		.rgs-form /deep/ .el-upload .el-icon-plus {
+		  		  cursor: pointer;
+		  		  color: #002355;
+		  		  font-weight: 600;
+		  		  font-size: 32px;
+		  		  border-color: #333;
+		  		  line-height: 60px;
+		  		  border-radius: 30px;
+		  		  background: #fff;
+		  		  width: 120px;
+		  		  border-width: 1px;
+		  		  border-style: solid;
+		  		  text-align: center;
+		  		  height: 60px;
+		  		}
+	}
+	.required {
+		position: relative;
+	}
+	.required::after{
+				color: red;
+				left: 90px;
+				position: absolute;
+				content: "*";
+				order: 2;
+			}
+</style>
